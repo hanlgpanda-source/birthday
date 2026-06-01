@@ -6,6 +6,7 @@
 <title>Happy Birthday Mỵ ❤️</title>
 
 <style>
+    
 *{
     margin:0;
     padding:0;
@@ -130,14 +131,7 @@ body{
     z-index:20;
 }
 
-.photo{
-    width:260px;
-    height:360px;
-    object-fit:cover;
-    border-radius:20px;
-    border:8px solid white;
-    box-shadow:0 0 30px rgba(255,255,255,.9);
-}
+
 
 .message{
     margin-top:20px;
@@ -157,11 +151,59 @@ canvas{
     pointer-events:none;
     z-index:15;
 }
+    #wishRain{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:1;
+    pointer-events:none;
+}
+
+.wish{
+    position:absolute;
+    top:-100px;
+    color:rgba(255,255,255,0.85);
+    font-size:22px;
+    font-weight:bold;
+    text-shadow:0 0 10px #ff69b4;
+    white-space:nowrap;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    90%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+
+.content{
+    z-index:20;
+}
+
+.container{
+    z-index:20;
+}
 </style>
 </head>
 
 <body>
-
+<div id="wishRain">
+    
+</div>
 <div class="hearts" id="hearts"></div>
 
 <canvas id="fireworks"></canvas>
@@ -181,15 +223,13 @@ canvas{
 
 <div class="content" id="content">
 
-    <img src="my.jpg" class="photo">
+
 
     <div class="message" id="message"></div>
 
 </div>
 
-<audio id="song">
-    <source src="happy-birthday.mp3" type="audio/mpeg">
-</audio>
+
 
 <script>
 
@@ -215,7 +255,54 @@ setInterval(()=>{
 
 
 /* MỞ QUÀ */
+const wishes = [
 
+"Vạn sự như ý 🌸",
+"Thân thể khỏe mạnh 💖",
+"Học tập tốt 📚",
+"Xinh đẹp hơn ✨",
+"Yêu thương nhiều hơn ❤️",
+"Love you so much 💕",
+"Hạnh phúc mỗi ngày 🌷",
+"Luôn mỉm cười 😊",
+"Thành công rực rỡ 🌟",
+"Bình an và may mắn 🍀",
+"Mọi điều tốt đẹp nhất 🎀",
+"Ước gì được nấy 🎂",
+"Tuổi mới thật tuyệt vời 🎁",
+"Niềm vui ngập tràn 💝",
+"Luôn được yêu thương 💞"
+
+];
+
+const wishRain = document.getElementById("wishRain");
+
+function createWish(){
+
+    const wish = document.createElement("div");
+
+    wish.className = "wish";
+
+    wish.innerHTML =
+        wishes[Math.floor(Math.random()*wishes.length)];
+
+    wish.style.left =
+        Math.random()*100 + "%";
+
+    wish.style.fontSize =
+        (18 + Math.random()*18) + "px";
+
+    wish.style.animationDuration =
+        (8 + Math.random()*8) + "s";
+
+    wishRain.appendChild(wish);
+
+    setTimeout(()=>{
+        wish.remove();
+    },16000);
+}
+
+setInterval(createWish,250);
 const gift=document.getElementById("gift");
 const content=document.getElementById("content");
 const tapText=document.getElementById("tapText");
@@ -226,7 +313,6 @@ gift.addEventListener("click",()=>{
     gift.classList.add("open");
     tapText.style.display="none";
 
-    song.play();
 
     startFireworks();
 
@@ -242,7 +328,7 @@ gift.addEventListener("click",()=>{
 /* HIỆU ỨNG GÕ CHỮ */
 
 const text=
-"🎂 Chúc Mỵ sinh nhật vui vẻ, mọi điều đều được như ý nguyện. Love you so much! ❤️";
+"🎂 Chúc Mỵ sinh nhật vui vẻ, tuổi mới luôn xinh đẹp hơn, hạnh phúc hơn, học tập thật tốt, luôn gặp nhiều may mắn và mọi điều đều được như ý nguyện. Love you so much! ❤️";
 
 const message=document.getElementById("message");
 
